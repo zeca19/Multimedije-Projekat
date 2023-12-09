@@ -1,4 +1,18 @@
 import pygame, sys
+from player import Player
+
+
+class Game:
+
+    def __init__(self):
+        player_sprite=Player((screen_width/2,screen_height))
+        self.player=pygame.sprite.GroupSingle(player_sprite)
+
+    def run(self):
+        self.player.draw(screen)
+        # Treba da azurira sve grupe
+        # I treba da nacrta sve grupe
+        
 
 if __name__=="__main__":
     pygame.init()
@@ -7,6 +21,7 @@ if __name__=="__main__":
 
     screen=pygame.display.set_mode((screen_width,screen_height))
     clock=pygame.time.Clock()
+    game=Game()
 
     while True:
         for event in pygame.event.get():
@@ -16,6 +31,7 @@ if __name__=="__main__":
 
         
         screen.fill((30,30,30))
+        game.run()
 
         pygame.display.flip()
         clock.tick(60)
