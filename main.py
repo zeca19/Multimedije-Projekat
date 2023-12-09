@@ -9,6 +9,7 @@ class Game:
         self.player=pygame.sprite.GroupSingle(player_sprite)
 
     def run(self):
+        self.player.update()
         self.player.draw(screen)
         # Treba da azurira sve grupe
         # I treba da nacrta sve grupe
