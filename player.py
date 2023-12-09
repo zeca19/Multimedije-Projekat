@@ -3,11 +3,12 @@ import pygame
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self,pos):
+    def __init__(self,pos,constraint,speed):
         super().__init__()
         self.image=pygame.image.load("../Invader/graphics/player.png").convert_alpha()
         self.rect=self.image.get_rect(midbottom=pos)
-        self.speed=5
+        self.speed=speed
+        self.max_x_constraint=constraint
 
     # Sluzi za gledanje koje je dugme pritisnuto
     def get_input(self):
@@ -21,3 +22,11 @@ class Player(pygame.sprite.Sprite):
     
     def update(self):
         self.get_input()
+        self.constraint()
+
+    def constraint(self):
+        if self.rect.left<=0:
+            self.rect.left=0
+        if self.rect.right>=self.max_x_constraint:
+            self.rect.right=self.max_x_constraint
+       
