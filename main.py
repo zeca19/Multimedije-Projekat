@@ -15,6 +15,7 @@ class Game:
         self.lives=3
         self.live_surf=pygame.image.load("../Invader/graphics/player.png").convert_alpha()
         self.live_x_start_pos=screen_width-(self.live_surf.get_size()[0]*2+20)
+        self.score=0
 
         # Obstacle setup
         self.shape=obstacle.shape
