@@ -1,6 +1,6 @@
 import pygame, sys
-from code.player import Player
-from code.obstacle import Obstacle
+from player import Player
+import obstacle
 from alien import Alien
 class Game:
 
