@@ -1,5 +1,5 @@
 import pygame
-
+from laser import Laser
 
 
 class Player(pygame.sprite.Sprite):
@@ -12,6 +12,8 @@ class Player(pygame.sprite.Sprite):
         self.laser_time=0
         self.ready=True
         self.laser_coldown=600
+
+        self.lasers=pygame.sprite.Group()
 
     # Sluzi za gledanje koje je dugme pritisnuto
     def get_input(self):
@@ -39,6 +41,7 @@ class Player(pygame.sprite.Sprite):
         self.get_input()
         self.constraint()
         self.recharge()
+        self.lasers.update()
 
     def constraint(self):
         if self.rect.left<=0:
@@ -48,5 +51,5 @@ class Player(pygame.sprite.Sprite):
 
 
     def shoot_laser(self):
-        print("Pucamo sad")
+        self.lasers.add(Laser(self.rect.center,-8,self.rect.bottom))
        
