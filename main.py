@@ -36,6 +36,18 @@ class Game:
         # Ekstra poeni vanzemaljac
         self.extra=pygame.sprite.GroupSingle()
         self.extra_spawn_time=randint(400,800)
+
+        #Audio
+
+        music=pygame.mixer.Sound("../Invader/audio/music.wav")
+        music.set_volume(0.2)
+        music.play(loops=-1)
+        self.laser_sound=pygame.mixer.Sound("../Invader/audio/laser.wav")
+        self.laser_sound.set_volume(0.5)
+        self.explosion_sound=pygame.mixer.Sound("../Invader/audio/explosion.wav")
+        self.explosion_sound.set_volume(0.3)
+
+
     def create_obstacle(self,x_start,y_start,offset_x):
         for row_index, row in enumerate(self.shape):
             for col_index, col in enumerate(row):
@@ -80,13 +92,14 @@ class Game:
             random_alien=choice(self.aliens.sprites())
             laser_sprite=Laser(random_alien.rect.center,6,screen_height)
             self.alien_lasers.add(laser_sprite)
+            self.laser_sound.play()
 
     
     def extra_alien_timer(self):
         self.extra_spawn_time-=1
         if self.extra_spawn_time<=0:
             self.extra.add(Extra(choice(["right","left"]),screen_width))
-            self.extra_spawn_time=randint(400,800)
+            self.extra_spawn_time=randint(40,80)
 
     def collision_checks(self):
 
@@ -102,6 +115,7 @@ class Game:
                     for allien in alliens_hit:
                         self.score+=allien.value
                     laser.kill()
+                    self.explosion_sound.play()
                 
                 if pygame.sprite.spritecollide(laser,self.extra,True):
                     self.score+=500
@@ -177,7 +191,7 @@ class CRT:
         line_height=3
         line_amount=int(screen_height/line_height)
         for line in range(line_amount):
-            y=pos=line*line_height
+            y_pos=line*line_height
             pygame.draw.line(self.tv,"black",(0,y_pos),(screen_width,y_pos),1)
 
 
