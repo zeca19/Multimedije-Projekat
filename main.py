@@ -155,6 +155,13 @@ class Game:
         score_rect=score_surf.get_rect(topleft=(10,-10))
         screen.blit(score_surf,score_rect)
 
+    def victory_message(self):
+        if not self.aliens.sprites():
+            victory_surf=self.font.render("You won",False,"white")
+            victory_rect=victory_surf.get_rect(center=(screen_width/2,screen_height/2))
+            screen.blit(victory_surf,victory_rect)
+
+
 
     def run(self):
         self.player.update()
@@ -172,6 +179,7 @@ class Game:
         self.alien_lasers.draw(screen)
         self.extra.draw(screen)
         self.display_score()
+        self.victory_message()
         # Treba da azurira sve grupe
         # I treba da nacrta sve grupe
 
