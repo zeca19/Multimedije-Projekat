@@ -16,6 +16,7 @@ class Game:
         self.live_surf=pygame.image.load("../Invader/graphics/player.png").convert_alpha()
         self.live_x_start_pos=screen_width-(self.live_surf.get_size()[0]*2+20)
         self.score=0
+        self.font=pygame.font.Font("../Invader/fonts/Pixeled.ttf",20)
 
         # Obstacle setup
         self.shape=obstacle.shape
@@ -89,18 +90,23 @@ class Game:
 
     def collision_checks(self):
 
+
         # Provera da li se laseri podudaraju
         if self.player.sprite.lasers:
             for laser in self.player.sprite.lasers:
                 # Kolizicija objekata
                 if pygame.sprite.spritecollide(laser,self.blocks,True):
                     laser.kill()
-                
-                if pygame.sprite.spritecollide(laser,self.aliens,True):
+                alliens_hit=pygame.sprite.spritecollide(laser,self.aliens,True)
+                if alliens_hit:
+                    for allien in alliens_hit:
+                        self.score+=allien.value
                     laser.kill()
                 
                 if pygame.sprite.spritecollide(laser,self.extra,True):
+                    self.score+=500
                     laser.kill()
+                    
         
         if self.alien_lasers:
             for laser in self.alien_lasers:
@@ -129,6 +135,11 @@ class Game:
         for live in range(self.lives-1):
             x=self.live_x_start_pos+(live*(self.live_surf.get_size()[0]+10))
             screen.blit(self.live_surf,(x,8))
+    
+    def display_score(self):
+        score_surf=self.font.render(f"Score:{self.score}",False,"white")
+        score_rect=score_surf.get_rect(topleft=(10,-10))
+        screen.blit(score_surf,score_rect)
 
 
     def run(self):
@@ -146,6 +157,7 @@ class Game:
         self.aliens.draw(screen)
         self.alien_lasers.draw(screen)
         self.extra.draw(screen)
+        self.display_score()
         # Treba da azurira sve grupe
         # I treba da nacrta sve grupe
         
